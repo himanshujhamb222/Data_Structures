@@ -1,0 +1,77 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ int height(TreeNode*root)
+ {
+     if(root==NULL)
+     {
+         return 0;
+     }
+     else
+     {
+         int lheight=height(root->left);
+         int rheight=height(root->right);
+         if(lheight>rheight)
+         {
+             return lheight+1;
+         }
+         else
+         {
+             return rheight+1;
+         }
+     }
+ }
+ void printLevel(TreeNode*root,int level,vector<vector<int>>&my_vector,int level1,bool itr)
+ {
+     if(root==NULL)
+     {
+         return;
+     }
+     if(level==1)
+     {
+         my_vector[level1-1].push_back(root->val);
+     }
+     else if(level>1)
+     {
+       if(itr)
+       {
+           printLevel(root->left,level-1,my_vector,level1,itr);
+           printLevel(root->right,level-1,my_vector,level1,itr);
+       }
+       else
+       {
+           printLevel(root->right,level-1,my_vector,level1,itr);
+           printLevel(root->left,level-1,my_vector,level1,itr);
+           
+       }
+     }
+ }
+void printspiral(TreeNode*root,vector<vector<int>>&my_vector)
+ {
+    int h=height(root);
+    bool itr=true;
+    for(int i=1;i<=h;i++)
+    {
+        printLevel(root,i,my_vector,i,itr);
+        itr=!itr;
+        
+    }
+ }
+vector<vector<int> > Solution::zigzagLevelOrder(TreeNode* A) 
+{
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    int h=height(A);
+    vector<vector<int>>my_vector(h);
+    printspiral(A,my_vector);
+    return my_vector;
+    
+}
