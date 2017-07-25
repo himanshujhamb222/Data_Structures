@@ -1,0 +1,40 @@
+int Solution::braces(string A) 
+{
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    
+    stack<char>mystack;
+    int express;
+    bool redundant=0;
+    for(int i=0;i<A.length()&&!redundant;i++)
+    {
+        if(A[i]=='('||A[i]=='+'||A[i]=='-'||A[i]=='/'||A[i]=='*')
+        {
+            mystack.push(A[i]);
+        }
+        else if(A[i]==')')
+        {
+            express=0;
+            while(mystack.top()!='(')
+            {
+                if(mystack.top()=='+'||mystack.top()=='-'||mystack.top()=='*'||mystack.top()=='/')
+                {
+                    express=1;
+                }
+                mystack.pop();
+            }
+            mystack.pop();
+            if(!express)
+            {
+                redundant=1;
+            }
+        }
+    }
+    if(redundant)
+    {
+        return 1;
+    }
+    return 0;
+}
