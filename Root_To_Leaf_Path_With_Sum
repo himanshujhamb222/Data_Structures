@@ -1,0 +1,57 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ void path(TreeNode*root,vector<int>&curr,vector<vector<int> >&res,int sum,int k)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    curr.push_back(root->val);
+    sum=sum+root->val;
+    if(root->left==NULL &&root->right==NULL)
+    {
+        if(sum==k)
+        {
+            res.push_back(curr);
+        }
+        //curr.pop_back();
+        return;
+    }
+    if(root->left)
+    {
+        path(root->left,curr,res,sum,k);
+        curr.pop_back();
+    }
+    //curr.pop_back();
+    if(root->right)
+    {
+        path(root->right,curr,res,sum,k);
+        curr.pop_back();
+    }
+    //curr.pop_back();
+}
+
+vector<vector<int> > Solution::pathSum(TreeNode* root, int sum)
+{
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+
+vector<vector<int> >res;
+vector<int>curr;
+    if(root==NULL)
+    {
+        return res;
+    }
+    path(root,curr,res,0,sum);
+    return res;
+    
+}
